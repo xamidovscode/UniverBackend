@@ -1,6 +1,6 @@
-# PERSONAL CV
+# BOILERPLATE
 
-This is a CV PROJECT that Crafted with love by Project Managers.
+This is a BOILERPLATE that Crafted with love by Project Managers.
 
 ## Getting Started
 
@@ -9,14 +9,9 @@ Setup project environment with [virtualenv](https://pypi.org/project/virtualenv/
 ```bash
 $ virtualenv venv
 $ source venv/bin/activate
-$ pip install -r requirements.txt
+$ pip install -r requirementS/develop.txt
 
-# You may want to change the name `projectname`.
-$ django-admin startproject projectname
 
-$ cd projectname/
-$ python manage.py migrate
-$ python manage.py runserver
 ```
 
 ## Contributing
