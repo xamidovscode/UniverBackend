@@ -3,6 +3,8 @@ from . import views
 
 
 urlpatterns = [
-    path('floor-list/', views.FloorListAPIView.as_view()),
+    path('floor-list/', views.FloorParentListAPIView.as_view()),
+    path('room-list/<int:pk>/', views.FloorChildListAPIView.as_view()),
+
 ]
 

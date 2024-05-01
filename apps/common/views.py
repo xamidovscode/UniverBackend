@@ -1,10 +1,18 @@
-from django.shortcuts import render
 from ..common import models as common
 from rest_framework import generics
 from ..common import serializers
 
 
-class FloorListAPIView(generics.ListAPIView):
+class FloorParentListAPIView(generics.ListAPIView):
     queryset = common.Floor.objects.filter(parent__isnull=True)
     serializer_class = serializers.FloorListSerializer
+    pagination_class = None
 
+
+class FloorChildListAPIView(generics.ListAPIView):
+    serializer_class = serializers.FloorListSerializer
+    pagination_class = None
+
+    def get_queryset(self):
+        queryset = common.Floor.objects.filter(parent__isnull=False, parent__id=self.kwargs.get('pk'))
+        return queryset
