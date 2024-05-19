@@ -14,7 +14,7 @@ class BaseModel(models.Model):
 class Floor(BaseModel):
     name = models.CharField(max_length=255, verbose_name="Name")
     is_active = models.BooleanField(default=True, verbose_name='Active')
-    parent = models.ForeignKey("self", on_delete=models.PROTECT, verbose_name="parent", related_name='children',
+    parent = models.ForeignKey("self", on_delete=models.PROTECT, verbose_name="Qavat", related_name='children',
                                null=True, blank=True)
     order = models.PositiveIntegerField(default=999)
 
