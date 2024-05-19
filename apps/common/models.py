@@ -17,3 +17,7 @@ class Floor(BaseModel):
     parent = models.ForeignKey("self", on_delete=models.PROTECT, verbose_name="parent", related_name='children',
                                null=True, blank=True)
     order = models.PositiveIntegerField(default=999)
+
+    class Meta:
+        verbose_name = "Qavat va Honalar"
+        verbose_name_plural = "Qavat va Honalar"
