@@ -21,3 +21,12 @@ class Floor(BaseModel):
     class Meta:
         verbose_name = "Qavat va Honalar"
         verbose_name_plural = "Qavat va Honalar"
+
+
+class Group(BaseModel):
+    name = models.CharField(max_length=255)
+    teacher = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="groups"
+    )
+
+
