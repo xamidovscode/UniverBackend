@@ -6,3 +6,6 @@ django-jazzmin
 drf-yasg
 djangorestframework
 django-filter
+djangorestframework-simplejwt==5.2.2
+django-phonenumber-field==7.1.0
+phonenumberslite==8.13.16

@@ -48,17 +48,23 @@ DJANGO_APPS = [
 
 CUSTOM_APPS = [
     "apps.common",
+    'apps.users',
+
 ]
 
 THIRD_PARTY_APPS = [
     "rest_framework",
     "drf_yasg",
     "corsheaders",
+    'rest_framework_simplejwt',
+
 ]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     "DEFAULT_FILTER_BACKENDS": (
         "django_filters.rest_framework.DjangoFilterBackend",
@@ -188,3 +194,6 @@ CELERY_TIMEZONE = "Asia/Tashkent"
 
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
+
+
+AUTH_USER_MODEL = "users.User"
