@@ -1,4 +1,4 @@
-from rest_framework import generics, views, viewsets
+from rest_framework import generics, views, viewsets, status
 from rest_framework.response import Response
 from . import serializers, models
 
@@ -11,5 +11,9 @@ class LoginView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         phone = serializer.validated_data['phone']
         user = models.User.objects.get(phone=phone)
-        return Response(user.tokens())
+        data = {
+            'tokens': user.tokens(),
+            'role': user.role
+        }
+        return Response(data, status=status.HTTP_200_OK)
 

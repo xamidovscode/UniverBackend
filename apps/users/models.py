@@ -6,7 +6,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager as AbstractUserManager
 from ..common.models import BaseModel
 from phonenumber_field.modelfields import PhoneNumberField
-EMPLOYEE, OWNER = 'employee', 'owner'
+EMPLOYEE, OWNER, STUDENT = 'employee', 'owner', 'student'
 ACTIVE, NEW = 'active', 'new'
 
 
@@ -61,8 +61,10 @@ class User(AbstractUser, BaseModel):
     email = None
 
     ROLE_CHOICES = (
-        (EMPLOYEE, 'Client'),
-        (OWNER, 'Owner')
+        (EMPLOYEE, 'Employee'),
+        (OWNER, 'Owner'),
+        (STUDENT, 'Student'),
+
     )
 
     STATUS_CHOICES = (
