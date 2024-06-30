@@ -22,3 +22,4 @@ class FloorUpdateAPIView(generics.UpdateAPIView):
     queryset = common.Floor.objects.all()
     serializer_class = serializers.FloorListSerializer
     lookup_field = 'pk'
+

@@ -11,6 +11,7 @@ class FloorListSerializer(ModelSerializer):
         fields = (
             "id",
             "name",
+            'parent'
         )
 
 

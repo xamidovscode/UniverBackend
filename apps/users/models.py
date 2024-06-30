@@ -100,13 +100,3 @@ class User(AbstractUser, BaseModel):
             "refresh": str(refresh),
             "access": str(refresh.access_token),
         }
-
-
-# class Student(BaseModel):
-#     full_name = models.CharField(max_length=255)
-#     group = models.ForeignKey(
-#         'common.Group', on_delete=models.CASCADE, related_name="students"
-#     )
-#     phone = PhoneNumberField()
-#     is_responsible = models.BooleanField(default=False)
-
