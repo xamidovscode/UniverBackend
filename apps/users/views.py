@@ -1,6 +1,7 @@
 from rest_framework import generics, views, viewsets, status
 from rest_framework.response import Response
 from . import serializers, models
+from ..common import models as common
 
 
 class LoginView(generics.GenericAPIView):
@@ -22,3 +23,11 @@ class LoginView(generics.GenericAPIView):
 class CreateStudentWithApartmentAPIView(generics.CreateAPIView):
     serializer_class = serializers.StudentSerializer
 
+
+class StudentsListAPIView(generics.ListAPIView):
+    serializer_class = serializers.StudentSerializer
+    pagination_class = None
+
+    def get_queryset(self):
+        users_pk = common.UserApartment.objects.filter(status="active", pk=self.kwargs.get('pk')).values_list('student__id', flat=True)
+        return models.User.objects.filter(pk__in=users_pk)
