@@ -22,5 +22,8 @@ class Floor(BaseModel):
         verbose_name = "Qavat va Honalar"
         verbose_name_plural = "Qavat va Honalar"
 
+    def __str__(self):
+        return f"{self.pk}-{self.name}"
+
 
 
