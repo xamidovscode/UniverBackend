@@ -3,4 +3,7 @@ from . import views
 
 urlpatterns = [
     path('login/', views.LoginView.as_view(), name='login'),
+    path('create/student/', views.CreateStudentWithApartmentAPIView.as_view(), name='login'),
+
 ]
+

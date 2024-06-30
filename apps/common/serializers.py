@@ -22,5 +22,3 @@ class FloorListSerializer(ModelSerializer):
                 raise serializers.ValidationError({'parent': "Bunday qavat mavjud emas"})
         return attrs
 
-
-

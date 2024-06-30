@@ -7,3 +7,9 @@ from ..common import models
 class FloorAdmin(admin.ModelAdmin):
     list_display = ("id", "name", 'parent')
     list_display_links = ("id", "name", 'parent')
+
+
+@admin.register(models.UserApartment)
+class FloorAdmin(admin.ModelAdmin):
+    list_display = ("id", "student", 'apartment')
+    list_display_links = ("id", "student", 'apartment')

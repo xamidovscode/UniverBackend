@@ -18,3 +18,7 @@ class LoginView(generics.GenericAPIView):
         }
         return Response(data, status=status.HTTP_200_OK)
 
+
+class CreateStudentWithApartmentAPIView(generics.CreateAPIView):
+    serializer_class = serializers.StudentSerializer
+
