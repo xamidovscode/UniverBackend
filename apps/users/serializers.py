@@ -35,7 +35,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         apartment_id = attrs['apartment']
-        apartment = common.UserApartment.objects.filter(status='active', apartment__id=apartment_id).count()
+        apartment = common.UserApartment.objects.filter(status='active', apartment__id=apartment_id.id).count()
         if apartment >= 6:
             raise serializers.ValidationError({"apartment": "Bu xonada oquvchilar soni 6 ta"})
         return attrs
