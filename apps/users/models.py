@@ -82,6 +82,14 @@ class User(AbstractUser, BaseModel):
     def __str__(self):
         return str(self.phone)
 
+    def save(self, *args, **kwargs):
+        self.hashing_password()
+        super().save(*args, **kwargs)
+
+    def hashing_password(self):
+        if not self.password.startswith('pbkdf2_sha256'):
+            self.set_password(self.password)
+
     def create_verify_code(self):
         code = "".join(str(random.randint(0, 100) % 10) for _ in range(4))
         if UserConfirmation.objects.filter(user=self).exists():
