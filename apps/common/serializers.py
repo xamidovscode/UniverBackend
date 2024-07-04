@@ -29,6 +29,15 @@ class AttendanceUpdateSerializer(serializers.ModelSerializer):
         model = models.Attendance
         fields = (
             'id', 'is_available',
-            'student', 'date', 'apartment', 'is_late'
+            'student', 'date', 'apartment', 'is_late',
+            'student_name', 'room_name'
         )
+
+        extra_kwargs = {
+            "student": {"required": True},
+            "apartment": {"required": True},
+            "is_late": {"required": True},
+            "date": {"required": True},
+
+        }
 

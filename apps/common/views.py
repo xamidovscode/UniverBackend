@@ -1,8 +1,8 @@
 from datetime import datetime
-
 from ..common import models as common
-from rest_framework import generics
+from rest_framework import generics, filters
 from ..common import serializers
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class FloorParentListAPIView(generics.ListCreateAPIView):
@@ -36,6 +36,8 @@ class AttendanceUpdateAPIView(generics.UpdateAPIView):
 class AttendanceFloorListAPIView(generics.ListAPIView):
     serializer_class = serializers.AttendanceUpdateSerializer
     pagination_class = None
+    filter_backends = (filters.SearchFilter, DjangoFilterBackend)
+    filterset_fields = ("apartment",)
 
     def get_queryset(self):
         date_str = self.kwargs.get("date")
@@ -44,6 +46,6 @@ class AttendanceFloorListAPIView(generics.ListAPIView):
         except:
             date = datetime.today().date()
         queryset = common.Attendance.objects.filter(
-            date__year=date.year, date__month=date.month, apartment=self.kwargs.get('floor')
+            date__year=date.year, date__month=date.month
         )
         return queryset

@@ -58,4 +58,12 @@ class Attendance(BaseModel):
     is_available = models.BooleanField(verbose_name='Is available', null=True, blank=True)
     is_late = models.BooleanField(default=False)
 
+    @property
+    def student_name(self):
+        return self.student.first_name
+
+    @property
+    def room_name(self):
+        return self.apartment.name
+
 
