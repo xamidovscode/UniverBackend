@@ -37,7 +37,7 @@ class AttendanceUpdateSerializer(serializers.ModelSerializer):
             "student": {"required": True},
             "apartment": {"required": True},
             "is_late": {"required": True},
-            "date": {"required": True},
+            "date ": {"required": True},
 
         }
 
