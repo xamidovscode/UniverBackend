@@ -31,3 +31,6 @@ class StudentsListAPIView(generics.ListAPIView):
     def get_queryset(self):
         users_pk = common.UserApartment.objects.filter(status="active", apartment__id=self.kwargs.get('pk')).values_list('student__id', flat=True)
         return models.User.objects.filter(pk__in=users_pk)
+
+
+

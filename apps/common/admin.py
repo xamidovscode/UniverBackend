@@ -13,3 +13,9 @@ class FloorAdmin(admin.ModelAdmin):
 class FloorAdmin(admin.ModelAdmin):
     list_display = ("id", "student", 'apartment')
     list_display_links = ("id", "student", 'apartment')
+
+
+@admin.register(models.Attendance)
+class FloorAdmin(admin.ModelAdmin):
+    list_display = ("id", "student", 'apartment')
+    list_display_links = ("id", "student", 'apartment')

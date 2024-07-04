@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from ..common import models as common
 from rest_framework import generics
 from ..common import serializers
@@ -23,3 +25,25 @@ class FloorUpdateAPIView(generics.UpdateAPIView):
     serializer_class = serializers.FloorListSerializer
     lookup_field = 'pk'
 
+
+class AttendanceUpdateAPIView(generics.UpdateAPIView):
+    queryset = common.Attendance.objects.all()
+    serializer_class = serializers.AttendanceUpdateSerializer
+    lookup_field = 'pk'
+    http_method_names = ('patch', )
+
+
+class AttendanceFloorListAPIView(generics.ListAPIView):
+    serializer_class = serializers.AttendanceUpdateSerializer
+    pagination_class = None
+
+    def get_queryset(self):
+        date_str = self.kwargs.get("date")
+        try:
+            date = datetime.strptime(date_str, "%Y-%m-%d")
+        except:
+            date = datetime.today().date()
+        queryset = common.Attendance.objects.filter(
+            date__year=date.year, date__month=date.month, apartment=self.kwargs.get('floor')
+        )
+        return queryset

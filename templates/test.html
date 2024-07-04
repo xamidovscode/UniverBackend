@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .button {
+            background-color: #ccc;
+            border: none;
+            color: black;
+            padding:20px 80px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            position: relative;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .button span {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .button:hover span {
+            display: inline;
+        }
+
+        .button .default-text {
+            display: block;
+        }
+
+        .button:hover .default-text {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <button class="button">
+        <span class="default-text"></span>
+        <span class="hover-text">Switch </span>
+    </button>
+</body>
+</html>

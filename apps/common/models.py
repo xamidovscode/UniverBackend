@@ -1,3 +1,6 @@
+import datetime
+from datetime import timezone
+
 from django.db import models
 
 
@@ -42,3 +45,17 @@ class UserApartment(BaseModel):
         max_length=50, verbose_name='Group status',
         choices=GroupStatus.choices, default=GroupStatus.ACTIVE
     )
+
+
+class Attendance(BaseModel):
+    student = models.ForeignKey(
+        'users.User', on_delete=models.CASCADE, related_name='attendances', verbose_name='Student'
+    )
+    date = models.DateField(verbose_name='Date', default=datetime.datetime.now())
+    apartment = models.ForeignKey(
+        Floor, on_delete=models.CASCADE, related_name='attendances', limit_choices_to={'parent__isnull': False}
+    )
+    is_available = models.BooleanField(verbose_name='Is available', null=True, blank=True)
+    is_late = models.BooleanField(default=False)
+
+

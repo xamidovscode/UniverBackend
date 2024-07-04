@@ -22,3 +22,13 @@ class FloorListSerializer(ModelSerializer):
                 raise serializers.ValidationError({'parent': "Bunday qavat mavjud emas"})
         return attrs
 
+
+class AttendanceUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Attendance
+        fields = (
+            'id', 'is_available',
+            'student', 'date', 'apartment', 'is_late'
+        )
+
