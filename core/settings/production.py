@@ -17,7 +17,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = [
-    "https://example.com"
+    'http://joxacode.uz',
+    'https://joxacode.uz'
 ]
 
 ###################################################################
