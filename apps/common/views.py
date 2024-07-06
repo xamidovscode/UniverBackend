@@ -43,9 +43,8 @@ class AttendanceFloorListAPIView(generics.ListAPIView):
         date_str = self.kwargs.get("date")
         try:
             date = datetime.strptime(date_str, "%Y-%m-%d").date()
-        except:
-            date = datetime.today().date()
-        queryset = common.Attendance.objects.filter(
-            date=date
-        )
+        except (TypeError, ValueError):
+            date = datetime.today().date()  # Use Django's timezone-aware `now()`
+
+        queryset = common.Attendance.objects.filter(date=date)
         return queryset
