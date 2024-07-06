@@ -34,10 +34,10 @@ class AttendanceUpdateSerializer(serializers.ModelSerializer):
         )
 
         extra_kwargs = {
-            "student": {"required": True},
-            "apartment": {"required": True},
-            "is_late": {"required": True},
-            "date ": {"required": True},
+            "student": {"read_only": True},
+            "apartment": {"read_only": True},
+            "is_late": {"read_only": True},
+            "date ": {"read_only": True},
 
         }
 
