@@ -42,7 +42,7 @@ class AttendanceFloorListAPIView(generics.ListAPIView):
     def get_queryset(self):
         date_str = self.kwargs.get("date")
         try:
-            date = datetime.strptime(date_str, "%Y-%m-%d")
+            date = datetime.strptime(date_str, "%Y-%m-%d").date()
         except:
             date = datetime.today().date()
         queryset = common.Attendance.objects.filter(
