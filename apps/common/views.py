@@ -37,14 +37,15 @@ class AttendanceFloorListAPIView(generics.ListAPIView):
     serializer_class = serializers.AttendanceUpdateSerializer
     pagination_class = None
     filter_backends = (filters.SearchFilter, DjangoFilterBackend)
-    filterset_fields = ("apartment",)
+    filterset_fields = ("apartment", 'date')
+    queryset = common.Attendance.objects.filter()
 
-    def get_queryset(self):
-        date_str = self.kwargs.get("date")
-        try:
-            date = datetime.strptime(date_str, "%Y-%m-%d").date()
-        except (TypeError, ValueError):
-            date = datetime.today().date()  # Use Django's timezone-aware `now()`
-
-        queryset = common.Attendance.objects.filter(date=str(date))
-        return queryset
+    # def get_queryset(self):
+    #     date_str = self.kwargs.get("date")
+    #     try:
+    #         date = datetime.strptime(date_str, "%Y-%m-%d").date()
+    #     except (TypeError, ValueError):
+    #         date = datetime.today().date()
+    #
+    #     queryset = common.Attendance.objects.filter(date=str(date))
+    #     return queryset
