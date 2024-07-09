@@ -30,8 +30,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = 'SOME_SECRET_KEY'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DEBUG")
-# DEBUG = True
+# DEBUG = env.bool("DEBUG")
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
