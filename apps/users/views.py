@@ -33,4 +33,6 @@ class StudentsListAPIView(generics.ListAPIView):
         return models.User.objects.filter(pk__in=users_pk)
 
 
-
+class EmployeeListAPIView(generics.ListAPIView):
+    queryset = models.User.objects.filter(role='employee')
+    serializer_class = serializers.EmployeeListSerializer

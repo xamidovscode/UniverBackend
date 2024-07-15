@@ -54,4 +54,13 @@ class StudentSerializer(serializers.ModelSerializer):
         return instance
 
 
+class EmployeeListSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = users.User
+        fields = (
+            'id',
+            'name',
+            'phone',
+            'first_name'
+        )
