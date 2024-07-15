@@ -36,3 +36,4 @@ class StudentsListAPIView(generics.ListAPIView):
 class EmployeeListAPIView(generics.ListAPIView):
     queryset = models.User.objects.filter(role='employee')
     serializer_class = serializers.EmployeeListSerializer
+    pagination_class = None
