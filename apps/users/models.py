@@ -6,6 +6,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager as AbstractUserManager
 from ..common.models import BaseModel
 from phonenumber_field.modelfields import PhoneNumberField
+from apps.common import models as common
+
 EMPLOYEE, OWNER, STUDENT = 'employee', 'owner', 'student'
 ACTIVE, NEW = 'active', 'new'
 
@@ -77,6 +79,9 @@ class User(AbstractUser, BaseModel):
     status = models.CharField(default=NEW, verbose_name='Status', choices=STATUS_CHOICES, max_length=50)
     USERNAME_FIELD = 'phone'
     wallet = models.PositiveBigIntegerField(default=0, verbose_name='Wallet')
+    group = models.ForeignKey(
+        common.Group, related_name='users', on_delete=models.PROTECT, null=True
+    )
     objects = UserManager()
 
     def __str__(self):

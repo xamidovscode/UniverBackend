@@ -49,3 +49,8 @@ class AttendanceFloorListAPIView(generics.ListAPIView):
     #
     #     queryset = common.Attendance.objects.filter(date=str(date))
     #     return queryset
+
+
+class GroupCreateAPIView(generics.ListCreateAPIView):
+    queryset = common.Group.objects.all()
+    serializer_class = serializers.GroupSerializer

@@ -31,10 +31,14 @@ class StudentSerializer(serializers.ModelSerializer):
             'password',
             'first_name',
             'apartment',
+            'group',
         )
 
     def validate(self, attrs):
         apartment_id = attrs['apartment']
+        group = attrs.get('group')
+        if not group:
+            raise serializers.ValidationError({"group": "Guruh tanlash shart"})
         apartment = common.UserApartment.objects.filter(status='active', apartment__id=apartment_id.id).count()
         if apartment >= 6:
             raise serializers.ValidationError({"apartment": "Bu xonada oquvchilar soni 6 ta"})

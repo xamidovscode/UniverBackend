@@ -41,3 +41,16 @@ class AttendanceUpdateSerializer(serializers.ModelSerializer):
 
         }
 
+
+class GroupSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Group
+        fields = (
+            'id', 'teacher',
+            'name', 'edu_form'
+        )
+
+    def validate(self, attrs):
+        return attrs
+

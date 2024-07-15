@@ -1,6 +1,5 @@
 import datetime
 from datetime import timezone
-
 from django.db import models
 
 
@@ -66,4 +65,18 @@ class Attendance(BaseModel):
     def room_name(self):
         return self.apartment.name
 
+
+class Group(BaseModel):
+    class GroupGroupEduForm(models.TextChoices):
+        DAYTIME = 'daytime', 'Daytime'
+        EVENING = 'evening', 'Evening'
+        REMOTE = 'remote', 'Remote'
+        CORRESPONDENCE = 'correspondence', 'Correspondence'
+
+    name = models.CharField(max_length=255)
+    teacher = models.ForeignKey(
+        'users.User', related_name='teacher_groups', on_delete=models.PROTECT,
+        limit_choices_to={"role": 'employee'}
+    )
+    edu_form = models.CharField(max_length=255, choices=GroupGroupEduForm.choices, default=GroupGroupEduForm.DAYTIME)
 
