@@ -60,7 +60,7 @@ class EmployeeListSerializer(serializers.ModelSerializer):
         model = users.User
         fields = (
             'id',
-            'name',
+            'first_name',
             'phone',
             'first_name'
         )
