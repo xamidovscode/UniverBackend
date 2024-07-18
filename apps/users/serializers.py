@@ -47,6 +47,8 @@ class StudentSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         apartment = validated_data.pop("apartment")
         validated_data['status'] = 'active'
+        validated_data['role'] = 'student'
+
         instance = super().create(validated_data)
         common.UserApartment.objects.create(
             student=instance, apartment=apartment
