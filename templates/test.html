@@ -1,55 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ariza</title>
     <style>
-        .button {
-            background-color: #ccc;
-            border: none;
-            color: black;
-            padding:20px 80px;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        .header {
+            text-align: right;
+            margin-bottom: 50px;
+        }
+        .header p {
+            margin: 0;
+        }
+        .title {
             text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 4px;
-            position: relative;
-            transition: background-color 0.3s, color 0.3s;
+            font-weight: bold;
+            margin-bottom: 30px;
         }
-
-        .button:hover {
-            background-color: #f0f0f0;
+        .content {
+            text-align: justify;
+            line-height: 1.6;
         }
-
-        .button span {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .signature-section {
+            margin-top: 50px;
         }
-
-        .button:hover span {
-            display: inline;
+        .signature-section table {
+            width: 100%;
         }
-
-        .button .default-text {
-            display: block;
-        }
-
-        .button:hover .default-text {
-            display: none;
+        .signature-section td {
+            padding: 10px;
         }
     </style>
 </head>
 <body>
-    <button class="button">
-        <span class="default-text"></span>
-        <span class="hover-text">Switch </span>
-    </button>
+
+<div style="max-width: 700px; margin: 0 auto;">
+    <div class="header">
+        <p><b>Muhammad al-Xorazmiy nomidagi</b></p>
+        <p><b>Toshkent axborot texnologiyalari</b></p>
+        <p><b>universiteti Nuraфshon filiаli KIF</b></p>
+        <p><b>Yoshlar masalalari bo‘yicha</b></p>
+        <p><b>dekan o‘rinbosari J.G‘azatovga</b></p>
+</div>
+
+<div class="title">
+    ARIZA
+</div>
+
+<div class="content">
+    <p>Men <b>{{ first_name }}</b> (qizi) TATU Nuraфshon filiаli TTJ ning <b>{{ address }}</b> istiqomat qilaman.<br><b>SABAB:</b> Men ota onamni ko‘rish uchun Qashqadaryo viloyati Koson tumaniga ketayotganligim sababli 10-13 may kunlari TTJ dan ruxsat berishingizni so‘rayman.<br>Barcha ko‘ngilsiz hodisalarga o‘zim javobgarman. Agarda TTJdan foydalanish to‘g‘risidagi shartnoma bandlariga rioya qilmasam, belgilangan vaqtda TTJ ga qaytmasam filial tomonidan o‘rnatilgan tartibda chora ko‘rilishingizga e’tirozim yo‘q.</p>
+    <p><i>Ushbu ariza darsdan ozod qilish uchun asos bo‘lmaydi.</i></p>
+</div>
+
+<div class="signature-section">
+    <table border="0">
+        <tr>
+            <td><b>Sana:</b> {{ current_date }}</td>
+            <td></td>
+            <td><b>Talaba FISH:</b> {{ first_name }}</td>
+        </tr>
+        <tr>
+            <td><b>Kamendant:</b></td>
+            <td>FISH: {{ responsible }}</td>
+            <td>Xolat: {{ status }}</td>
+
+        </tr>
+    </table>
+</div>
+
+</div>
 </body>
 </html>

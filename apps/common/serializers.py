@@ -11,7 +11,8 @@ class FloorListSerializer(ModelSerializer):
         fields = (
             "id",
             "name",
-            'parent'
+            'parent',
+            'order'
         )
 
     def validate(self, attrs):

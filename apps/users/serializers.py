@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from rest_framework import serializers
 from phonenumber_field.serializerfields import PhoneNumberField
 from ..users import models as users
@@ -22,6 +24,14 @@ class StudentSerializer(serializers.ModelSerializer):
         queryset=common.Floor.objects.filter(parent__isnull=False),
         required=True, write_only=True
     )
+    attendance = serializers.SerializerMethodField()
+
+    def get_attendance(self, obj):
+        attendance = obj.attendances.filter(date=datetime.today().date()).first()
+        return {
+            'id': attendance.pk,
+            'is_available': attendance.is_available
+        } if attendance else False
 
     class Meta:
         model = users.User
@@ -32,6 +42,7 @@ class StudentSerializer(serializers.ModelSerializer):
             'first_name',
             'apartment',
             'group',
+            'attendance'
         )
 
     def validate(self, attrs):

@@ -25,15 +25,10 @@ class CreateStudentWithApartmentAPIView(generics.CreateAPIView):
 
 
 class StudentsListAPIView(generics.ListAPIView):
-    serializer_class = serializers.StudentSerializer
-    pagination_class = None
-
-    def get_queryset(self):
-        users_pk = common.UserApartment.objects.filter(status="active", apartment__id=self.kwargs.get('pk')).values_list('student__id', flat=True)
-        return models.User.objects.filter(pk__in=users_pk)
+    queryset = models.User.objects.filter(role='student')
+    serializer_class = serializers.EmployeeListSerializer
 
 
 class EmployeeListAPIView(generics.ListAPIView):
     queryset = models.User.objects.filter(role='employee')
     serializer_class = serializers.EmployeeListSerializer
-    pagination_class = None
