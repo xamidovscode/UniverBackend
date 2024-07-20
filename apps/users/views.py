@@ -33,7 +33,7 @@ class StudentsListAPIView(generics.ListAPIView):
         queryset = self.queryset
         if pk:
             users_pk = common.UserApartment.objects.filter(
-                status="active", apartment__id=self.kwargs.get('pk')).values_list('student__id', flat=True)
+                status="active", apartment__id=pk).values_list('student__id', flat=True)
             queryset = queryset.filter(id__in=users_pk)
         return queryset
 
