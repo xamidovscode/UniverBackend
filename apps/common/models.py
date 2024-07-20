@@ -20,10 +20,6 @@ class Floor(BaseModel):
         "self", on_delete=models.PROTECT, verbose_name="Qavat", related_name='children', null=True, blank=True)
     order = models.PositiveIntegerField(default=999)
 
-    class Meta:
-        verbose_name = "Qavat va Honalar"
-        verbose_name_plural = "Qavat va Honalar"
-
     def __str__(self):
         return f"{self.pk}-{self.name}"
 
@@ -46,6 +42,11 @@ class UserApartment(BaseModel):
     )
 
 
+class LateReason(BaseModel):
+    title = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
+
+
 class Attendance(BaseModel):
     student = models.ForeignKey(
         'users.User', on_delete=models.CASCADE, related_name='attendances', verbose_name='Student'
@@ -55,7 +56,11 @@ class Attendance(BaseModel):
         Floor, on_delete=models.CASCADE, related_name='attendances', limit_choices_to={'parent__isnull': False}
     )
     is_available = models.BooleanField(verbose_name='Is available', null=True, blank=True)
+    admin = models.ForeignKey(
+        'users.User', on_delete=models.CASCADE, related_name='admin_attendances', null=True
+    )
     is_late = models.BooleanField(default=False)
+    reason = models.TextField()
 
     @property
     def student_name(self):
@@ -79,4 +84,28 @@ class Group(BaseModel):
         limit_choices_to={"role": 'employee'}
     )
     edu_form = models.CharField(max_length=255, choices=GroupGroupEduForm.choices, default=GroupGroupEduForm.DAYTIME)
+
+
+class Application(BaseModel):
+
+    class StatusChoices(models.TextChoices):
+        MODERATION = 'moderation', 'Moderation'
+        APPROVED = 'approved', 'Approved'
+        CANCELLED = 'cancelled', 'Cancelled'
+
+    user_apartment = models.ForeignKey(
+        UserApartment, related_name='applications', on_delete=models.CASCADE,
+    )
+    reason = models.TextField()
+    admin = models.ForeignKey(
+        'users.User', related_name='applications', on_delete=models.PROTECT,
+    )
+    status = models.CharField(max_length=255, choices=StatusChoices.choices, default=StatusChoices.MODERATION)
+
+
+class ApplicationDate(BaseModel):
+    application = models.ForeignKey(
+        Application, related_name='dates', on_delete=models.CASCADE
+    )
+    date = models.DateField()
 
