@@ -10,7 +10,6 @@ class Command(BaseCommand):
             parent_name = f'{floor}-Qavat'
             parent, _ = Floor.objects.get_or_create(name=parent_name, order=floor)
             for room in range(1, 12):
-                if room < 10:
-                    child_name = f'{room}-Xona'
+                child_name = f'{room}-xona'
                 children, _ = Floor.objects.get_or_create(name=child_name, parent=parent, order=room)
         self.stdout.write(msg='SUCCESS')
