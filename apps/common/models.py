@@ -94,11 +94,11 @@ class Application(BaseModel):
         CANCELLED = 'cancelled', 'Cancelled'
 
     user_apartment = models.ForeignKey(
-        UserApartment, related_name='applications', on_delete=models.CASCADE,
+        UserApartment, related_name='applications', on_delete=models.CASCADE, null=True
     )
     reason = models.TextField()
     admin = models.ForeignKey(
-        'users.User', related_name='applications', on_delete=models.PROTECT,
+        'users.User', related_name='applications', on_delete=models.PROTECT, null=True
     )
     status = models.CharField(max_length=255, choices=StatusChoices.choices, default=StatusChoices.MODERATION)
 

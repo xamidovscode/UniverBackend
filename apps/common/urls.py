@@ -14,5 +14,7 @@ urlpatterns = [
     path('group/create/', views.GroupCreateAPIView.as_view(), name='login'),
     path('group/list/', views.GroupCreateAPIView.as_view(), name='login'),
 
+    path('application-student/create/', views.ApplicationCreateAPIView.as_view(), name='attendances'),
+
 ]
 

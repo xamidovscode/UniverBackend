@@ -1,4 +1,7 @@
 from datetime import datetime
+
+from rest_framework.permissions import IsAuthenticated
+
 from ..common import models as common
 from rest_framework import generics, filters
 from ..common import serializers
@@ -49,3 +52,9 @@ class AttendanceFloorListAPIView(generics.ListAPIView):
 class GroupCreateAPIView(generics.ListCreateAPIView):
     queryset = common.Group.objects.all()
     serializer_class = serializers.GroupSerializer
+
+
+class ApplicationCreateAPIView(generics.CreateAPIView):
+    serializer_class = serializers.ApplicationCreateSerializer
+    permission_classes = [IsAuthenticated]
+

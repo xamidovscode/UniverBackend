@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from rest_framework.serializers import ModelSerializer
 from rest_framework.validators import ValidationError
 from ..common import models
@@ -55,3 +57,55 @@ class GroupSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         return attrs
 
+
+class ApplicationDatesSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.ApplicationDate
+        fields = (
+            'date',
+        )
+
+    def validate(self, attrs):
+        if attrs['date'] < datetime.today().date():
+            raise serializers.ValidationError({"date": "O\'tib ketgan sanani tanlash mumkin emas"})
+        return attrs
+
+
+class ApplicationCreateSerializer(serializers.ModelSerializer):
+    dates = serializers.ListSerializer(
+        required=True, write_only=True,
+        child=ApplicationDatesSerializer(required=True)
+    )
+
+    class Meta:
+        model = models.Application
+        fields = (
+            'id',
+            'reason',
+            'dates',
+        )
+
+    def validate(self, attrs):
+        request = self.context['request']
+        user = request.user
+        user_apartment = models.UserApartment.objects.filter(student=user).first()
+        if len(attrs['dates']) == 0:
+            raise serializers.ValidationError({"dates": "Sana kiritish majburiy"})
+        if not user_apartment:
+            raise serializers.ValidationError({"reason": "Yotoqhona bilan shartnoma mavjud emas"})
+        attrs['user_apartment'] = user_apartment
+
+        for date_obj in attrs['dates']:
+            date = date_obj.get('date')
+            print(date)
+        return attrs
+
+    def create(self, validated_data):
+        dates_data = validated_data.pop('dates')
+        application = models.Application.objects.create(**validated_data)
+
+        for date_data in dates_data:
+            models.ApplicationDate.objects.create(application=application, **date_data)
+
+        return application
