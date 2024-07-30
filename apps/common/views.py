@@ -7,6 +7,8 @@ from rest_framework import generics, filters
 from ..common import serializers
 from django_filters.rest_framework import DjangoFilterBackend
 
+from ..users.permissions import IsStudent
+
 
 class FloorParentListAPIView(generics.ListCreateAPIView):
     queryset = common.Floor.objects.filter(parent__isnull=True)
@@ -56,5 +58,13 @@ class GroupCreateAPIView(generics.ListCreateAPIView):
 
 class ApplicationCreateAPIView(generics.CreateAPIView):
     serializer_class = serializers.ApplicationCreateSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStudent]
 
+
+class StudentApplicationListAPIView(generics.ListAPIView):
+    serializer_class = serializers.StudentApplicationsSerializer
+    queryset = common.Application.objects.all()
+    permission_classes = [IsStudent]
+
+    def get_queryset(self):
+        return self.queryset.filter(user_apartment__student=self.request.user)

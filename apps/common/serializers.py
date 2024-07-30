@@ -98,7 +98,9 @@ class ApplicationCreateSerializer(serializers.ModelSerializer):
 
         for date_obj in attrs['dates']:
             date = date_obj.get('date')
-            print(date)
+            for application in models.Application.objects.filter(user_apartment=user_apartment):
+                if models.ApplicationDate.objects.filter(date=date, application=application).exists():
+                    raise serializers.ValidationError({"date": "Bu sanada ariza yuborilgan"})
         return attrs
 
     def create(self, validated_data):
@@ -109,3 +111,19 @@ class ApplicationCreateSerializer(serializers.ModelSerializer):
             models.ApplicationDate.objects.create(application=application, **date_data)
 
         return application
+
+
+class StudentApplicationsSerializer(serializers.ModelSerializer):
+    dates = ApplicationDatesSerializer(many=True)
+
+    class Meta:
+        model = models.Application
+        fields = (
+            'id',
+            'reason',
+            'user_apartment',
+            'status',
+            'admin',
+            'dates'
+        )
+
