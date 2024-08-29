@@ -14,7 +14,7 @@ class LoginView(generics.GenericAPIView):
         user = models.User.objects.get(phone=phone)
         data = {
             'tokens': user.tokens(),
-            'role': user.role,
+            'roles': user.roles,
             'status': user.status
         }
         return Response(data, status=status.HTTP_200_OK)

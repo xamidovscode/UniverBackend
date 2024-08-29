@@ -1,4 +1,4 @@
-django
+django==4.2.11
 psycopg2-binary
 python-environ
 django-cors-headers

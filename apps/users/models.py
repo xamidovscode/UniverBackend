@@ -8,7 +8,7 @@ from ..common.models import BaseModel
 from phonenumber_field.modelfields import PhoneNumberField
 from apps.common import models as common
 
-EMPLOYEE, OWNER, STUDENT = 'employee', 'owner', 'student'
+TEACHER, EMPLOYEE, CEO, DIRECTOR, STUDENT = 'teacher', 'employee', 'ceo', 'director', 'student'
 ACTIVE, NEW = 'active', 'new'
 
 
@@ -64,7 +64,6 @@ class User(AbstractUser, BaseModel):
 
     ROLE_CHOICES = (
         (EMPLOYEE, 'Employee'),
-        (OWNER, 'Owner'),
         (STUDENT, 'Student'),
 
     )
@@ -83,6 +82,11 @@ class User(AbstractUser, BaseModel):
         common.Group, related_name='users', on_delete=models.PROTECT, null=True
     )
     objects = UserManager()
+
+    @property
+    def roles(self):
+        return UserRoles.objects.filter(user=self).values('id', 'role')
+
 
     def __str__(self):
         return str(self.phone)
@@ -113,3 +117,25 @@ class User(AbstractUser, BaseModel):
             "refresh": str(refresh),
             "access": str(refresh.access_token),
         }
+
+class UserRoles(BaseModel):
+
+    ROLE_CHOICES = (
+        (TEACHER , 'teacher'),
+        (EMPLOYEE, 'employee'),
+        (CEO, 'ceo'),
+        (DIRECTOR, 'director'),
+        (STUDENT, 'student'),
+    )
+
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='user_roles', verbose_name='User'
+    )
+    role = models.CharField(max_length=255, choices=ROLE_CHOICES, default=STUDENT)
+
+    class Meta:
+        unique_together = ('user', 'role')
+    #
+    # def __str__(self):
+    #     return str(self.role)
+
