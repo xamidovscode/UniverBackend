@@ -40,6 +40,9 @@ class UserApartment(BaseModel):
         max_length=50, verbose_name='Group status',
         choices=GroupStatus.choices, default=GroupStatus.ACTIVE
     )
+    added_at = models.DateField()
+    deleted_at = models.DateField()
+
 
 
 class LateReason(BaseModel):

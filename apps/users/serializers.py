@@ -2,6 +2,8 @@ from datetime import datetime
 
 from rest_framework import serializers
 from phonenumber_field.serializerfields import PhoneNumberField
+
+from .models import UserRoles
 from ..users import models as users
 from ..common import models as common
 
@@ -42,7 +44,8 @@ class StudentSerializer(serializers.ModelSerializer):
             'first_name',
             'apartment',
             'group',
-            'attendance'
+            'attendance',
+            'added_at'
         )
 
     def validate(self, attrs):
@@ -61,6 +64,9 @@ class StudentSerializer(serializers.ModelSerializer):
         validated_data['role'] = 'student'
 
         instance = super().create(validated_data)
+        UserRoles.objects.create(
+            user=instance, role='student'
+        )
         common.UserApartment.objects.create(
             student=instance, apartment=apartment
         )
