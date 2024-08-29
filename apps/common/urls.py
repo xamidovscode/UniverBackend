@@ -7,6 +7,7 @@ urlpatterns = [
     path('floor-create/', views.FloorParentListAPIView.as_view()),
     path('room-list/<int:pk>/', views.FloorChildListAPIView.as_view()),
     path("floor/update/<int:pk>/", views.FloorUpdateAPIView.as_view()),
+    path("floor/destroy/<int:pk>/", views.FloorDestroyAPIView.as_view()),
 
     path('attendance/<int:pk>/', views.AttendanceUpdateAPIView.as_view(), name='attendance_detail'),
     path('attendance/date/', views.AttendanceFloorListAPIView.as_view(), name='attendances'),

@@ -27,6 +27,7 @@ class StudentSerializer(serializers.ModelSerializer):
         required=True, write_only=True
     )
     attendance = serializers.SerializerMethodField()
+    added_at = serializers.DateField(write_only=True, required=True)
 
     def get_attendance(self, obj):
         attendance = obj.attendances.filter(date=datetime.today().date()).first()

@@ -1,7 +1,4 @@
 from datetime import datetime
-
-from rest_framework.permissions import IsAuthenticated
-
 from ..common import models as common
 from rest_framework import generics, filters
 from ..common import serializers
@@ -11,7 +8,7 @@ from ..users.permissions import IsStudent
 
 
 class FloorParentListAPIView(generics.ListCreateAPIView):
-    queryset = common.Floor.objects.filter(parent__isnull=True)
+    queryset = common.Floor.objects.filter(parent__isnull=True, is_active=True)
     serializer_class = serializers.FloorListSerializer
     pagination_class = None
 
@@ -21,7 +18,11 @@ class FloorChildListAPIView(generics.ListAPIView):
     pagination_class = None
 
     def get_queryset(self):
-        queryset = common.Floor.objects.filter(parent__isnull=False, parent__id=self.kwargs.get('pk'))
+        queryset = common.Floor.objects.filter(
+            parent__isnull=False,
+            parent__id=self.kwargs.get('pk'),
+            is_active=True
+        )
         return queryset
 
 
@@ -29,6 +30,16 @@ class FloorUpdateAPIView(generics.UpdateAPIView):
     queryset = common.Floor.objects.all()
     serializer_class = serializers.FloorListSerializer
     lookup_field = 'pk'
+
+
+class FloorDestroyAPIView(generics.DestroyAPIView):
+    queryset = common.Floor.objects.all()
+    serializer_class = serializers.FloorListSerializer
+    lookup_field = 'pk'
+
+    def perform_destroy(self, instance):
+        instance.is_active = False
+        instance.save()
 
 
 class AttendanceUpdateAPIView(generics.UpdateAPIView):
