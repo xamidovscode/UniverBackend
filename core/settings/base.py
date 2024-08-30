@@ -185,6 +185,14 @@ CACHES = {
         "KEY_PREFIX": "boilerplate",  # todo: you must change this with your project name or something else
     }
 }
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    "OPEN-ATTENDANCE": {
+        'task': 'crontab.tasks.attendance.open_attendance',
+        'schedule': crontab(hour="21", minute="57"),
+    },
+}
 
 # CELERY CONFIGURATION
 # CELERY_BROKER_URL = env.str("CELERY_BROKER_URL", "redis://localhost:6379")
