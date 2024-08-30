@@ -1,9 +1,10 @@
 from datetime import datetime
-
+from celery import shared_task
 from apps.common.models import UserApartment, Attendance
 from apps.users.models import User
 
 
+@shared_task()
 def open_attendance():
     user_apartments = UserApartment.objects.filter(status='active').values_list('student__id', flat=True)
     users = User.objects.filter(pk__in=user_apartments)
