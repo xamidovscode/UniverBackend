@@ -43,7 +43,7 @@ class UserApartment(BaseModel):
         choices=GroupStatus.choices, default=GroupStatus.ACTIVE
     )
     added_at = models.DateField()
-    deleted_at = models.DateField()
+    deleted_at = models.DateField(null=True)
 
 
 
@@ -114,3 +114,14 @@ class ApplicationDate(BaseModel):
     )
     date = models.DateField()
 
+
+class StudentPayments(BaseModel):
+    student_apartment = models.ForeignKey(
+        UserApartment, related_name='payments', on_delete=models.PROTECT
+    )
+    amount = models.IntegerField(default=0)
+    date = models.DateField()
+    admin = models.ForeignKey(
+        'users.User', related_name='payments', on_delete=models.PROTECT, null=True
+    )
+    description = models.TextField()

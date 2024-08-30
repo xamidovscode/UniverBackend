@@ -1,13 +1,12 @@
 import random
-import uuid
 from datetime import datetime, timedelta
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager as AbstractUserManager
-from ..common.models import BaseModel
+from ..common.models import BaseModel, StudentPayments
 from phonenumber_field.modelfields import PhoneNumberField
 from apps.common import models as common
-
+from django.db.models import Sum
 TEACHER, EMPLOYEE, CEO, DIRECTOR, STUDENT = 'teacher', 'employee', 'ceo', 'director', 'student'
 ACTIVE, NEW = 'active', 'new'
 
@@ -87,6 +86,11 @@ class User(AbstractUser, BaseModel):
     def roles(self):
         return UserRoles.objects.filter(user=self).values('id', 'role')
 
+    @property
+    def balance(self):
+        return StudentPayments.objects.filter(student_apartment__student=self).aggregate(
+            amount=Sum("amount")
+        )['amount'] or 0
 
     def __str__(self):
         return str(self.phone)

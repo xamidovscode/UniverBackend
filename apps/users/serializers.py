@@ -3,6 +3,7 @@ from datetime import datetime
 from rest_framework import serializers
 from phonenumber_field.serializerfields import PhoneNumberField
 
+from utils.work_with_date import get_last_day_of_month, get_count_of_days
 from .models import UserRoles
 from ..users import models as users
 from ..common import models as common
@@ -46,7 +47,8 @@ class StudentSerializer(serializers.ModelSerializer):
             'apartment',
             'group',
             'attendance',
-            'added_at'
+            'added_at',
+            'balance'
         )
 
     def validate(self, attrs):
@@ -61,6 +63,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         apartment = validated_data.pop("apartment")
+        added_at = validated_data.pop("added_at")
         validated_data['status'] = 'active'
         validated_data['role'] = 'student'
 
@@ -68,11 +71,26 @@ class StudentSerializer(serializers.ModelSerializer):
         UserRoles.objects.create(
             user=instance, role='student'
         )
-        common.UserApartment.objects.create(
-            student=instance, apartment=apartment
+        user_apartment = common.UserApartment.objects.create(
+            student=instance, apartment=apartment, added_at=added_at
         )
+        self.withdraw_payment(user_apartment)
         return instance
 
+    @classmethod
+    def withdraw_payment(cls, user_apartment):
+        added_at = datetime.strptime(str(user_apartment.added_at), "%Y-%m-%d").date()
+        price = 200000
+        last_day = get_last_day_of_month(added_at)
+        all_days_count = get_count_of_days(added_at.replace(day=1), last_day.date())
+        allowed_days = get_count_of_days(added_at, last_day.date())
+        amount = -((price / all_days_count) * allowed_days)
+        print(amount)
+        common.StudentPayments.objects.create(
+            student_apartment=user_apartment,
+            amount=amount,
+            date=datetime.today().date(),
+        )
 
 class EmployeeListSerializer(serializers.ModelSerializer):
 
