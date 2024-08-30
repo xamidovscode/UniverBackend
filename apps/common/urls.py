@@ -9,6 +9,13 @@ detail_floor = views.FloorViewSets.as_view({'get': 'retrieve'})
 update_floor = views.FloorViewSets.as_view({'patch': 'partial_update'})
 
 
+create_payment = views.StudentPaymentViewSets.as_view({'post': 'create'})
+delete_payment = views.StudentPaymentViewSets.as_view({'delete': 'destroy'})
+list_payment = views.StudentPaymentViewSets.as_view({'get': 'list'})
+detail_payment = views.StudentPaymentViewSets.as_view({'get': 'retrieve'})
+update_payment = views.StudentPaymentViewSets.as_view({'patch': 'partial_update'})
+
+
 urlpatterns = [
     path('floor-list/', list_floor),
     path('floor-create/', create_floor),
@@ -25,6 +32,11 @@ urlpatterns = [
 
     path('application-student/create/', views.ApplicationCreateAPIView.as_view(), name='application_student_create'),
     path('student/applications/', views.StudentApplicationListAPIView.as_view(), name='application_student_list'),
+
+    path('student-payment/create/', create_payment),
+    path('student-payment/update/<int:pk>', update_payment),
+    path('student-payment/destroy/<int:pk>/', delete_payment),
+    path('student-payment/list/', list_payment),
 
 ]
 

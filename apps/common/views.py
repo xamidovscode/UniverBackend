@@ -1,4 +1,6 @@
 from datetime import datetime
+from sys import modules
+
 from utils.custom_filter import FloorFilter
 from ..common import models as common
 from rest_framework import generics, filters, viewsets
@@ -82,3 +84,9 @@ class StudentApplicationListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         return self.queryset.filter(user_apartment__student=self.request.user)
+
+
+class StudentPaymentViewSets(viewsets.ModelViewSet):
+    queryset = common.StudentPayments.objects.all()
+    serializer_class = serializers.StudentPaymentsSerializer
+

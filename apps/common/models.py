@@ -125,3 +125,10 @@ class StudentPayments(BaseModel):
         'users.User', related_name='payments', on_delete=models.PROTECT, null=True
     )
     description = models.TextField()
+
+    @property
+    def admin_data(self):
+        return {
+            'id': self.admin.pk,
+            'name': self.admin.first_name
+        } if self.admin else None

@@ -122,3 +122,15 @@ class StudentApplicationsSerializer(serializers.ModelSerializer):
             'dates'
         )
 
+
+class StudentPaymentsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.StudentPayments
+        fields = (
+            'id',
+            'student_apartment',
+            'amount',
+            'date',
+            'admin_data',
+        )
