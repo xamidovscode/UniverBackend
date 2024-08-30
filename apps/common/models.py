@@ -31,7 +31,7 @@ class UserApartment(BaseModel):
     class GroupStatus(models.TextChoices):
         ACTIVE = 'active', 'Active'
         ARCHIVED = 'archived', 'Archived'
-
+        FROZEN = 'frozen', 'Frozen'
     student = models.ForeignKey(
         "users.User", related_name="user_apartments", on_delete=models.CASCADE, verbose_name='Student',
     )
