@@ -12,9 +12,10 @@ update_floor = views.FloorViewSets.as_view({'patch': 'partial_update'})
 urlpatterns = [
     path('floor-list/', list_floor),
     path('floor-create/', create_floor),
-    # path('room-list/<int:pk>/', views),
     path("floor/update/<int:pk>/", update_floor),
     path("floor/destroy/<int:pk>/", delete_floor),
+    path("room-list/<int:pk>/", views.RoomsListAPIView.as_view()),
+    path("room/destroy/<int:pk>/", views.RoomDestroyAPIView.as_view()),
 
     path('attendance/<int:pk>/', views.AttendanceUpdateAPIView.as_view(), name='attendance_detail'),
     path('attendance/date/', views.AttendanceFloorListAPIView.as_view(), name='attendances'),

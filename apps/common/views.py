@@ -1,6 +1,5 @@
 from datetime import datetime
-from multiprocessing.managers import view_type
-
+from utils.custom_filter import FloorFilter
 from ..common import models as common
 from rest_framework import generics, filters, viewsets
 from ..common import serializers
@@ -9,14 +8,18 @@ from ..users.permissions import IsStudent
 
 
 class FloorViewSets(viewsets.ModelViewSet):
-    queryset = common.Floor.objects.all()
+    queryset = common.Floor.objects.filter(parent__isnull=True, is_active=True)
     serializer_class = serializers.FloorListSerializer
     pagination_class = None
+    filterset_class = FloorFilter
+
+    def perform_destroy(self, instance):
+        instance.is_active = False
+        instance.save()
 
 
 
-
-class FloorChildListAPIView(generics.ListAPIView):
+class RoomsListAPIView(generics.ListAPIView):
     serializer_class = serializers.FloorListSerializer
     pagination_class = None
 
@@ -29,16 +32,13 @@ class FloorChildListAPIView(generics.ListAPIView):
         return queryset
 
 
-class FloorUpdateAPIView(generics.UpdateAPIView):
-    queryset = common.Floor.objects.all()
+class RoomDestroyAPIView(generics.DestroyAPIView):
     serializer_class = serializers.FloorListSerializer
-    lookup_field = 'pk'
-
-
-class FloorDestroyAPIView(generics.DestroyAPIView):
-    queryset = common.Floor.objects.all()
-    serializer_class = serializers.FloorListSerializer
-    lookup_field = 'pk'
+    queryset = common.Floor.objects.filter(
+        parent__isnull=False,
+        is_active=True
+    )
+    pagination_class = None
 
     def perform_destroy(self, instance):
         instance.is_active = False

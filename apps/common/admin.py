@@ -5,8 +5,8 @@ from ..common import models
 
 @admin.register(models.Floor)
 class FloorAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", 'parent')
-    list_display_links = ("id", "name", 'parent')
+    list_display = ("id", "name", 'parent', 'is_active')
+    list_display_links = ("id", "name", 'parent', 'is_active')
 
 
 @admin.register(models.UserApartment)

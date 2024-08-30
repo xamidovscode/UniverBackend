@@ -17,13 +17,8 @@ class FloorListSerializer(ModelSerializer):
             'order',
         )
 
-    def validate(self, attrs):
-        parent_id = attrs.get("parent")
-        if parent_id:
-            parent = models.Floor.objects.filter(parent__isnull=False, pk=parent_id.pk)
-            if parent.exists():
-                raise serializers.ValidationError({'parent': "Bunday qavat mavjud emas"})
-        return attrs
+    def update(self, instance, validated_data):
+        return super().update(instance, validated_data)
 
 
 class AttendanceUpdateSerializer(serializers.ModelSerializer):
