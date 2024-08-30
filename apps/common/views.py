@@ -1,16 +1,19 @@
 from datetime import datetime
+from multiprocessing.managers import view_type
+
 from ..common import models as common
-from rest_framework import generics, filters
+from rest_framework import generics, filters, viewsets
 from ..common import serializers
 from django_filters.rest_framework import DjangoFilterBackend
-
 from ..users.permissions import IsStudent
 
 
-class FloorParentListAPIView(generics.ListCreateAPIView):
-    queryset = common.Floor.objects.filter(parent__isnull=True, is_active=True)
+class FloorViewSets(viewsets.ModelViewSet):
+    queryset = common.Floor.objects.all()
     serializer_class = serializers.FloorListSerializer
     pagination_class = None
+
+
 
 
 class FloorChildListAPIView(generics.ListAPIView):
