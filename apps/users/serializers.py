@@ -75,7 +75,8 @@ class StudentSerializer(serializers.ModelSerializer):
             student=instance, apartment=apartment, added_at=added_at
         )
         common.Attendance.objects.create(
-            student=instance, apartment=apartment, date=datetime.today().date()
+            student=instance, apartment=apartment, date=datetime.today().date(),
+            is_available=None
         )
         self.withdraw_payment(user_apartment)
         return instance
