@@ -63,7 +63,7 @@ class AttendanceFloorListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         date = datetime.today().date()
-        queryset = common.Attendance.objects.filter(date=str(date))
+        queryset = common.Attendance.objects.filter(date__year=date.year, date__month=date.month)
         return queryset
 
 
