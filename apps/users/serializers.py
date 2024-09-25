@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from rest_framework import serializers
 from phonenumber_field.serializerfields import PhoneNumberField
@@ -74,10 +74,13 @@ class StudentSerializer(serializers.ModelSerializer):
         user_apartment = common.UserApartment.objects.create(
             student=instance, apartment=apartment, added_at=added_at
         )
-        common.Attendance.objects.create(
-            student=instance, apartment=apartment, date=datetime.today().date(),
-            is_available=None
-        )
+        date = added_at
+        while date <= datetime.today().date():
+            common.Attendance.objects.create(
+                student=instance, apartment=apartment, date=date,
+                is_available=None
+            )
+            date += timedelta(days=1)
         self.withdraw_payment(user_apartment)
         return instance
 
