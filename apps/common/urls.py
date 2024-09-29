@@ -33,6 +33,11 @@ urlpatterns = [
 
     path('student/applications/', views.StudentApplicationListAPIView.as_view(), name='application_student_list'),
     path('student/application/create/', views.ApplicationCreateAPIView.as_view(), name='application_student_create'),
+    path('generate/application/<int:pk>/', views.GenerateApplicationAPIView.as_view()),
+
+
+    path('employee/applications/', views.ApplicationsListAPIView.as_view(), name='application_student_list'),
+    path('employee/application/update/<int:pk>/', views.ApplicationUpdateAPIView.as_view(), name='application_update'),
 
     path('student-payment/create/', create_payment),
     path('student-payment/update/<int:pk>', update_payment),

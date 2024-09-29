@@ -117,9 +117,22 @@ class StudentApplicationsSerializer(serializers.ModelSerializer):
             'id',
             'reason',
             'user_apartment',
-            'status',
             'admin',
-            'dates'
+            'address',
+            'status',
+            'student_data',
+            'admin_data',
+            'dates',
+        )
+
+
+class ApplicationUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Application
+        fields = (
+            'id',
+            'status',
         )
 
 

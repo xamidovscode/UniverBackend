@@ -1,11 +1,21 @@
+import os
+import uuid
 from datetime import datetime
 from rest_framework.exceptions import ValidationError
+
+from core import settings
 from utils.custom_filter import FloorFilter
+from .models import Application
 from ..common import models as common
 from rest_framework import generics, filters, viewsets
 from ..common import serializers
 from django_filters.rest_framework import DjangoFilterBackend
 from ..users.permissions import IsStudent
+from rest_framework.response import Response
+from django.template.loader import render_to_string
+from weasyprint import HTML
+from django.conf import settings
+from django.http import HttpResponse
 
 
 class FloorViewSets(viewsets.ModelViewSet):
@@ -107,6 +117,43 @@ class ApplicationCreateAPIView(generics.CreateAPIView):
     permission_classes = [IsStudent]
 
 
+
+
+class GenerateApplicationAPIView(generics.RetrieveAPIView):
+    queryset = Application.objects.all()
+    serializer_class = serializers.ApplicationCreateSerializer
+    lookup_field = 'pk'
+
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+        return Application.objects.filter(pk=pk, status='approved').first()
+
+    def retrieve(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj is None:
+            return Response({'msg': 'Application not found or not approved'}, status=404)
+
+        context = {
+            'pk': obj.pk,
+            'first_name': obj.user_apartment.student.first_name,
+            'reason': obj.reason,
+            'created_at': obj.created_at.date(),
+            'responsible': obj.admin.first_name,
+            'status': 'TASDIQLANDI'
+        }
+
+        html_string = render_to_string('test.html', context)
+        html = HTML(string=html_string)
+        result = html.write_pdf(base_url=request.build_absolute_uri())
+
+        filename = f'{uuid.uuid4()}-application.pdf'
+
+        response = HttpResponse(result, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        response['Content-Transfer-Encoding'] = 'binary'
+
+        return response
+
 class StudentApplicationListAPIView(generics.ListAPIView):
     serializer_class = serializers.StudentApplicationsSerializer
     queryset = common.Application.objects.all()
@@ -114,6 +161,18 @@ class StudentApplicationListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         return self.queryset.filter(user_apartment__student=self.request.user).order_by("-id")
+
+
+class ApplicationsListAPIView(generics.ListAPIView):
+    serializer_class = serializers.StudentApplicationsSerializer
+    queryset = common.Application.objects.all()
+
+
+class ApplicationUpdateAPIView(generics.UpdateAPIView):
+    serializer_class = serializers.ApplicationUpdateSerializer
+    queryset = common.Application.objects.all().exclude(status='approved')
+    lookup_field = 'pk'
+    http_method_names = ("patch",)
 
 
 class StudentPaymentViewSets(viewsets.ModelViewSet):

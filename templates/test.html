@@ -51,14 +51,14 @@
 </div>
 
 <div class="content">
-    <p>Men <b>{{ first_name }}</b> (qizi) TATU Nuraфshon filiаli TTJ ning <b>{{ address }}</b> istiqomat qilaman.<br><b>SABAB:</b> Men ota onamni ko‘rish uchun Qashqadaryo viloyati Koson tumaniga ketayotganligim sababli 10-13 may kunlari TTJ dan ruxsat berishingizni so‘rayman.<br>Barcha ko‘ngilsiz hodisalarga o‘zim javobgarman. Agarda TTJdan foydalanish to‘g‘risidagi shartnoma bandlariga rioya qilmasam, belgilangan vaqtda TTJ ga qaytmasam filial tomonidan o‘rnatilgan tartibda chora ko‘rilishingizga e’tirozim yo‘q.</p>
+    <p>Men <b>{{ first_name }}</b> (qizi) TATU Nuraфshon filiаli TTJ ning <b>{{ address }}</b> istiqomat qilaman.<br><b>SABAB:</b>{{ reason }}<br>Barcha ko‘ngilsiz hodisalarga o‘zim javobgarman. Agarda TTJdan foydalanish to‘g‘risidagi shartnoma bandlariga rioya qilmasam, belgilangan vaqtda TTJ ga qaytmasam filial tomonidan o‘rnatilgan tartibda chora ko‘rilishingizga e’tirozim yo‘q.</p>
     <p><i>Ushbu ariza darsdan ozod qilish uchun asos bo‘lmaydi.</i></p>
 </div>
 
 <div class="signature-section">
     <table border="0">
         <tr>
-            <td><b>Sana:</b> {{ current_date }}</td>
+            <td><b>Sana:</b> {{ created_at }}</td>
             <td></td>
             <td><b>Talaba FISH:</b> {{ first_name }}</td>
         </tr>
