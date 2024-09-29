@@ -113,7 +113,7 @@ class StudentApplicationListAPIView(generics.ListAPIView):
     permission_classes = [IsStudent]
 
     def get_queryset(self):
-        return self.queryset.filter(user_apartment__student=self.request.user)
+        return self.queryset.filter(user_apartment__student=self.request.user).order_by("-id")
 
 
 class StudentPaymentViewSets(viewsets.ModelViewSet):
