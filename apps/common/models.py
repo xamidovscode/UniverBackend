@@ -107,6 +107,20 @@ class Application(BaseModel):
     )
     status = models.CharField(max_length=255, choices=StatusChoices.choices, default=StatusChoices.MODERATION)
 
+    @property
+    def address(self):
+        return f"{self.user_apartment.apartment.parent.name} -- {self.user_apartment.apartment.name}"
+
+    @property
+    def student_data(self):
+        return self.user_apartment.student.first_name
+
+    @property
+    def admin_data(self):
+        return self.admin.first_name if self.admin else None
+
+
+
 
 class ApplicationDate(BaseModel):
     application = models.ForeignKey(

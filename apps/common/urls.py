@@ -26,12 +26,18 @@ urlpatterns = [
 
     path('attendance/<int:pk>/', views.AttendanceUpdateAPIView.as_view(), name='attendance_detail'),
     path('attendance/date/', views.AttendanceFloorListAPIView.as_view(), name='attendances'),
+    path('student-attendance/', views.StudentAttendanceListAPIView.as_view(), name='attendances'),
 
     path('group/create/', views.GroupCreateAPIView.as_view(), name='login'),
     path('group/list/', views.GroupCreateAPIView.as_view(), name='login'),
 
-    path('application-student/create/', views.ApplicationCreateAPIView.as_view(), name='application_student_create'),
     path('student/applications/', views.StudentApplicationListAPIView.as_view(), name='application_student_list'),
+    path('student/application/create/', views.ApplicationCreateAPIView.as_view(), name='application_student_create'),
+    path('generate/application/<int:pk>/', views.GenerateApplicationAPIView.as_view()),
+
+
+    path('employee/applications/', views.ApplicationsListAPIView.as_view(), name='application_student_list'),
+    path('employee/application/update/<int:pk>/', views.ApplicationUpdateAPIView.as_view(), name='application_update'),
 
     path('student-payment/create/', create_payment),
     path('student-payment/update/<int:pk>', update_payment),

@@ -2,10 +2,11 @@ from rest_framework import generics, views, viewsets, status
 from rest_framework.response import Response
 from . import serializers, models
 from ..common import models as common
-
+from rest_framework import permissions
 
 class LoginView(generics.GenericAPIView):
     serializer_class = serializers.LoginSerializer
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -15,7 +16,8 @@ class LoginView(generics.GenericAPIView):
         data = {
             'tokens': user.tokens(),
             'roles': user.roles,
-            'status': user.status
+            'status': user.status,
+            'phone': str(user.phone)
         }
         return Response(data, status=status.HTTP_200_OK)
 

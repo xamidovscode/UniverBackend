@@ -12,3 +12,5 @@ phonenumberslite==8.13.16
 celery==5.3.6
 channels-redis==4.1.0
 
+
+weasyprint==59.0
