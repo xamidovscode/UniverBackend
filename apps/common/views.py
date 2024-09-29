@@ -1,9 +1,7 @@
-import os
 import uuid
 from datetime import datetime
 from rest_framework.exceptions import ValidationError
 
-from core import settings
 from utils.custom_filter import FloorFilter
 from .models import Application
 from ..common import models as common
@@ -14,7 +12,6 @@ from ..users.permissions import IsStudent
 from rest_framework.response import Response
 from django.template.loader import render_to_string
 from weasyprint import HTML
-from django.conf import settings
 from django.http import HttpResponse
 
 
