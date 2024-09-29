@@ -31,8 +31,8 @@ urlpatterns = [
     path('group/create/', views.GroupCreateAPIView.as_view(), name='login'),
     path('group/list/', views.GroupCreateAPIView.as_view(), name='login'),
 
-    path('application-student/create/', views.ApplicationCreateAPIView.as_view(), name='application_student_create'),
     path('student/applications/', views.StudentApplicationListAPIView.as_view(), name='application_student_list'),
+    path('student/application/create/', views.ApplicationCreateAPIView.as_view(), name='application_student_create'),
 
     path('student-payment/create/', create_payment),
     path('student-payment/update/<int:pk>', update_payment),

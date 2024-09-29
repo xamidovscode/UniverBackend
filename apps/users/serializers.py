@@ -75,13 +75,14 @@ class StudentSerializer(serializers.ModelSerializer):
             student=instance, apartment=apartment, added_at=added_at
         )
         date = added_at
+        print(date)
         while date <= datetime.today().date():
             common.Attendance.objects.create(
                 student=instance, apartment=apartment, date=date,
                 is_available=None
             )
             date += timedelta(days=1)
-        self.withdraw_payment(user_apartment)
+        # self.withdraw_payment(user_apartment)
         return instance
 
     @classmethod

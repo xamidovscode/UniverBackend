@@ -79,6 +79,7 @@ class StudentAttendanceListAPIView(generics.ListAPIView):
     serializer_class = serializers.AttendanceUpdateSerializer
     pagination_class = None
     queryset = common.Attendance.objects.filter()
+    permission_classes = [IsStudent]
 
     def get_queryset(self):
         date_str = self.request.query_params.get("date")
