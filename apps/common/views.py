@@ -1,9 +1,7 @@
-import os
 import uuid
 from datetime import datetime
 from rest_framework.exceptions import ValidationError
 
-from core import settings
 from utils.custom_filter import FloorFilter
 from .models import Application
 from ..common import models as common
