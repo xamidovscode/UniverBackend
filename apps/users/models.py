@@ -139,7 +139,3 @@ class UserRoles(BaseModel):
 
     class Meta:
         unique_together = ('user', 'role')
-    #
-    # def __str__(self):
-    #     return str(self.role)
-

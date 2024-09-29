@@ -1,6 +1,5 @@
 from datetime import datetime
-from sys import modules
-
+from rest_framework.exceptions import ValidationError
 from utils.custom_filter import FloorFilter
 from ..common import models as common
 from rest_framework import generics, filters, viewsets
@@ -63,7 +62,28 @@ class AttendanceFloorListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         date = datetime.today().date()
-        queryset = common.Attendance.objects.filter(date=str(date))
+        queryset = common.Attendance.objects.filter(date__year=date.year, date__month=date.month)
+        return queryset
+
+
+class StudentAttendanceListAPIView(generics.ListAPIView):
+    serializer_class = serializers.AttendanceUpdateSerializer
+    pagination_class = None
+    queryset = common.Attendance.objects.filter()
+
+    def get_queryset(self):
+        date_str = self.request.query_params.get("date")
+        user = self.request.user
+        if date_str:
+            try:
+                date = datetime.strptime(date_str, "%Y-%m-%d")
+            except ValueError:
+                raise ValidationError({"date": "unsupported format"})
+            else:
+                queryset = common.Attendance.objects.filter(date__year=date.year, date__month=date.month, student=user)
+        else:
+            date = datetime.today().date()
+            queryset = common.Attendance.objects.filter(date__year=date.year, date__month=date.month, student=user)
         return queryset
 
 
