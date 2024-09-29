@@ -26,6 +26,7 @@ urlpatterns = [
 
     path('attendance/<int:pk>/', views.AttendanceUpdateAPIView.as_view(), name='attendance_detail'),
     path('attendance/date/', views.AttendanceFloorListAPIView.as_view(), name='attendances'),
+    path('student-attendance/', views.StudentAttendanceListAPIView.as_view(), name='attendances'),
 
     path('group/create/', views.GroupCreateAPIView.as_view(), name='login'),
     path('group/list/', views.GroupCreateAPIView.as_view(), name='login'),
